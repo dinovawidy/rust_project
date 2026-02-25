@@ -16,7 +16,13 @@ use redis::Client;
 use tracing_subscriber::{layer::SubscriberExt, util::SubscriberInitExt};
 use tracing_subscriber::EnvFilter;
 
-tracing_subscriber::registry()
+
+
+
+#[tokio::main]
+async fn main() {
+
+    tracing_subscriber::registry()
     .with(
         tracing_subscriber::fmt::layer()
             .json() // JSON log production ready
@@ -25,9 +31,6 @@ tracing_subscriber::registry()
     .with(EnvFilter::from_default_env())
     .init();
 
-
-#[tokio::main]
-async fn main() {
     dotenv().ok();
 
     let database_url = env::var("DATABASE_URL").expect("DATABASE_URL must be set");
@@ -38,6 +41,7 @@ async fn main() {
         .expect("Failed to create database pool");
 
         tracing::info!("Database connected successfully.");
+        println!("Database connected successfully.");
 
         let redis_url = env::var("REDIS_URL").expect("REDIS_URL must be set");
         let redis_client = Client::open(redis_url)

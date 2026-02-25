@@ -28,9 +28,9 @@ pub async fn get_users(
     let search = params.search.unwrap_or_default();
     let offset = (page - 1) * per_page;
 
-    /**
+    /*
     Count
-    **/
+    */
     
     let total: (i64,) = sqlx::query_as(
         "SELECT COUNT(*) FROM users WHERE name ILIKE $1"
